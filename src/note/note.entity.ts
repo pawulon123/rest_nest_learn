@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm'
+import { users } from '../user/user.entity';
 @Entity()
 
 export class notes {
@@ -14,5 +15,9 @@ export class notes {
     created_at: string;
     @Column()
     updated_at: string;
+
+    @ManyToOne(() => users, user => user.note)
+    user: users;
+
     
 }
