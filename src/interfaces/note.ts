@@ -5,3 +5,4 @@ export class Note{
     created_at:string;
     updated_at: string;
 };
+
