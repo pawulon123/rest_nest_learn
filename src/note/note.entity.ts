@@ -9,7 +9,7 @@ export class notes {
     @Column()
     value: string;
     @Column()
-    user_id: number;
+    userId: number;
     @Column()
     created_at: string;
     @Column()

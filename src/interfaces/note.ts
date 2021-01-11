@@ -1,5 +1,5 @@
 export class Note{
-    user_id: number
+    userId: number
     title: string;
     value: string;
     created_at:string;

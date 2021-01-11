@@ -9,7 +9,7 @@ export class NoteController {
     ) { }
     @Get()
     all(): Promise<Note[]> {
-        return this.noteService.index()
+        return this.noteService.index();
     }
     @Get(':id')
     one( @Param() params): Promise<Note[]> {
@@ -22,10 +22,10 @@ export class NoteController {
 
     @Put(':id')
     updata( @Param() params, @Body() note: Note): void {
-        this.noteService.updata(params.id, note)
+        this.noteService.updata(params.id, note);
     }
     @Delete(':id')
     destroy( @Param() params): void {
-        this.noteService.destroy(params.id)
+        this.noteService.destroy(params.id);
     }
 }
