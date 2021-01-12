@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm'
+import { users } from '../user/user.entity';
 @Entity()
 
 export class notes {
@@ -9,10 +10,14 @@ export class notes {
     @Column()
     value: string;
     @Column()
-    user_id: number;
+    userId: number;
     @Column()
     created_at: string;
     @Column()
     updated_at: string;
+
+    @ManyToOne(() => users, user => user.note)
+    user: users;
+
     
 }
