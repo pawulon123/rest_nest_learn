@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import {InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -11,21 +11,21 @@ constructor(
 private noteRepository: Repository<notes>,
 ) {}
 async index(): Promise<Note[]> {
-return await this.noteRepository.find();
+return await this.noteRepository.find().catch(err => {throw new HttpException('badrequest', HttpStatus.BAD_REQUEST)});;
 }
 async findOne(id): Promise<Note[]>{
-return await this.noteRepository.find({where: [{ 'id': id }]});
+return await this.noteRepository.find({where: [{ 'id': id }]}).catch(err => {throw new HttpException('badrequest', HttpStatus.BAD_REQUEST)});;
 }
 async create(note: Note): Promise<any> {
- const noteReady = await this.noteRepository.save(note);
+ const noteReady = await this.noteRepository.save(note).catch(err => {throw new HttpException('badrequest', HttpStatus.BAD_REQUEST)});;
 // Logger.log(noteReady);
 }
 async updata(id: string, body: Note): Promise<any>{
-const objAnswer =  await this.noteRepository.update(id,body);
- Logger.log(objAnswer);
+return await this.noteRepository.update(id,body).catch(err => {throw new HttpException('badrequest', HttpStatus.BAD_REQUEST)});
+
 }
 async destroy(id: string): Promise<any> {
- const objAnswer = await this.noteRepository.delete(id);
+ const objAnswer = await this.noteRepository.delete(id).catch(err => {throw new HttpException('badrequest', HttpStatus.BAD_REQUEST)});;
 Logger.log(objAnswer);
 }
 }
