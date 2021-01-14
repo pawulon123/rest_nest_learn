@@ -2,6 +2,7 @@
 #custom
 DockerCli.exe
 .docker-compose.yml
+.env
 
 # compiled output
 /dist

@@ -8,6 +8,7 @@ import { users } from './user/user.entity';
 import { notes } from './note/note.entity';
 import { ExceptionsLoggerFilter } from './utils/exceptionsLogger.filter';
 import { APP_FILTER } from '@nestjs/core';
+import { ConfigModule } from 'nestjs-dotenv';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -22,6 +23,7 @@ import { APP_FILTER } from '@nestjs/core';
     }),
     UserModule,
     NotesModule,
+    ConfigModule.forRoot()
   ],
   controllers: [AppController],
   providers: [
