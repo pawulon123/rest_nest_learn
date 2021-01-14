@@ -22,8 +22,8 @@ export class NoteController {
 
     @Put(':id')
     async updata( @Param() params, @Body() note: Note) {
-      const  error = await this.noteService.updata(params.id, note);
-        if(true)  Logger.log(error);  
+      await this.noteService.updata(params.id, note);
+          
        
     }
     @Delete(':id')
