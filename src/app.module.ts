@@ -7,16 +7,15 @@ import { UserModule } from './user/user.module';
 import { NotesModule } from './note/note.module';
 import { ExceptionsLoggerFilter } from './utils/exceptionsLogger.filter';
 import { APP_FILTER } from '@nestjs/core';
-import { ConfigModule } from 'nestjs-dotenv';
+import { ConfigModule } from '@nestjs/config';
 import  configDb  from './config.db';
-
 
 @Module({
   imports: [
+    ConfigModule.forRoot(), 
     TypeOrmModule.forRoot(configDb()),
     UserModule,
     NotesModule,
-    ConfigModule.forRoot(),
     
   ],
   controllers: [AppController],
