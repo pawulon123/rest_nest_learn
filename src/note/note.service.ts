@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import {InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -21,8 +21,8 @@ async create(note: Note): Promise<any> {
 // Logger.log(noteReady);
 }
 async updata(id: string, body: Note): Promise<any>{
-const objAnswer =  await this.noteRepository.update(id,body);
- Logger.log(objAnswer);
+return await this.noteRepository.update(id,body)
+
 }
 async destroy(id: string): Promise<any> {
  const objAnswer = await this.noteRepository.delete(id);
