@@ -2,16 +2,18 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import { users } from './user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import  giveMocks  from '../../test/helpers/mocks';
+
 
 describe('UserService', () => {
   let service: UserService;
-
+  const mocks = giveMocks()
   
   let mockRepository= {
-    index:jest.fn(),
-    findOne:jest.fn(),
-    create:jest.fn(),
-    updata:jest.fn(),
+    find:jest.fn(),
+    save:jest.fn(),
+    update:jest.fn(),
+    delete:jest.fn(),
     destroy:jest.fn()
    
   }
@@ -32,5 +34,15 @@ describe('UserService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+  describe('index', ()=>{
+    it('shuld be return list all users', async () => {
+      const user = mocks.user();
+      mockRepository.find.mockReturnValue([user, user])
+      const Users = await service.index();
+      expect(Users).toHaveLength(2);
+      expect(mockRepository.find).toHaveBeenCalledTimes(1);
+    })
+
   });
 });
