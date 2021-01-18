@@ -11,7 +11,7 @@ describe('UserService', () => {
   
   let mockRepository= {
     find:jest.fn(),
-    findOne:jest.fn(),
+    findOneOrFail:jest.fn(),
     save:jest.fn(),
     update:jest.fn(),
     delete:jest.fn(),
@@ -44,13 +44,13 @@ describe('UserService', () => {
       expect(mockRepository.find).toHaveBeenCalledTimes(1);
     })
   });
-  describe('findOne', ()=>{
+  describe('findOneOrFail', ()=>{
     it('should find existing  user', async () => {
       const user = mocks.user();
       mockRepository.find.mockReturnValue(user);
       const User = await service.findOne(1);
       expect(User).toMatchObject({ name : user.name })
-      expect(mockRepository.findOne).toHaveBeenCalledTimes(1);
+      expect(mockRepository.findOneOrFail).toHaveBeenCalledTimes(1);
     })
   });
 
