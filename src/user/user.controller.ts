@@ -12,7 +12,7 @@ export class UserController {
             return this.userService.index()           
         }
     @Get(':id')
-        one(@Param() params): Promise<User[]> { 
+        one(@Param() params): Promise<User> { 
             return this.userService.findOne(params.id);          
         }
     @Post()

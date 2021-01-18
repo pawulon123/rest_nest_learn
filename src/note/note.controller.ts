@@ -12,7 +12,7 @@ export class NoteController {
         return this.noteService.index();
     }
     @Get(':id')
-    one( @Param() params): Promise<Note[]> {
+    one( @Param() params): Promise<Note> {
         return this.noteService.findOne(params.id);
     }
     @Post()

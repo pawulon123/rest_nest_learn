@@ -11,6 +11,7 @@ describe('UserService', () => {
   
   let mockRepository= {
     find:jest.fn(),
+    findOne:jest.fn(),
     save:jest.fn(),
     update:jest.fn(),
     delete:jest.fn(),
@@ -25,7 +26,6 @@ describe('UserService', () => {
           provide:getRepositoryToken(users),
           useValue: mockRepository
         },
-      
       ],
     }).compile();
 
@@ -36,13 +36,22 @@ describe('UserService', () => {
     expect(service).toBeDefined();
   });
   describe('index', ()=>{
-    it('shuld be return list all users', async () => {
+    it('should be return list all users', async () => {
       const user = mocks.user();
       mockRepository.find.mockReturnValue([user, user])
       const Users = await service.index();
       expect(Users).toHaveLength(2);
       expect(mockRepository.find).toHaveBeenCalledTimes(1);
     })
-
   });
+  describe('findOne', ()=>{
+    it('should find existing  user', async () => {
+      const user = mocks.user();
+      mockRepository.find.mockReturnValue(user);
+      const User = await service.findOne(1);
+      expect(User).toMatchObject({ name : user.name })
+      expect(mockRepository.findOne).toHaveBeenCalledTimes(1);
+    })
+  });
+
 });

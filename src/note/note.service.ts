@@ -13,8 +13,8 @@ private noteRepository: Repository<notes>,
 async index(): Promise<Note[]> {
 return await this.noteRepository.find();
 }
-async findOne(id): Promise<Note[]>{
-return await this.noteRepository.find({where: [{ 'id': id }]});
+async findOne(id): Promise<Note>{
+return await this.noteRepository.findOne(id);
 }
 async create(note: Note): Promise<any> {
  const noteReady = await this.noteRepository.save(note);

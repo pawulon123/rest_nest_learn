@@ -13,8 +13,9 @@ export class UserService {
     async index(): Promise<User[]> {
         return await this.userRepository.find();
     }
-    async findOne(id): Promise<User[]>{ 
-        return await this.userRepository.find({where: [{ "id": id }]});
+    async findOne(id): Promise<User>{ 
+        // return await this.userRepository.find({where: [{ "id": id }]});
+        return await this.userRepository.findOne(id);
     }  
     async create(user: User): Promise<any> {
         const userReady = await this.userRepository.save(user);
