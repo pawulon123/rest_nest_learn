@@ -18,6 +18,7 @@ export class UserController {
     @Post()
         create(@Body() user: User): void {
             this.userService.create(user);
+            
         }
     @Put(':id')
         updata(@Param() params , @Body() user: User): void {
