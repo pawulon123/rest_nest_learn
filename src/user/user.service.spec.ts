@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import { users } from './user.entity';
@@ -8,7 +9,10 @@ import  giveMocks  from '../../test/helpers/mocks';
 describe('UserService', () => {
   let service: UserService;
   const mocks = giveMocks()
-  
+  const globalError ={
+    statusCode: 500,
+    message: "Internal server error"
+  }
   let mockRepository= {
     find:jest.fn(),
     findOneOrFail:jest.fn(),
@@ -54,13 +58,18 @@ describe('UserService', () => {
     })
   });
   describe('create', ()=>{
-    it('should be return empty object', async () => {
+    it('if successful, it should return undefined', async () => {
       const user = mocks.user();
       mockRepository.save.mockReturnValue({});
       const success = await service.create(user);
-      const isEmpty = Object.keys(success).length
-      expect(typeof success).toEqual('object')
-      expect(isEmpty).toEqual(0);
+      expect(success).toEqual(undefined);
+    });
+    it('if an error should return internal server error', async () => {
+      mockRepository.save.mockReturnValue(globalError);
+      await service.create(null).catch((error) => {
+         expect(error).toMatchObject({statusCode: 500})
+        });
+    
     })
   });
 
