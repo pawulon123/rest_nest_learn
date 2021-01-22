@@ -45,7 +45,7 @@ describe('UserService', () => {
       const Users = await service.index();
       expect(Users).toHaveLength(2);
       expect(mockRepository.find).toHaveBeenCalledTimes(1);
-    });
+      });
     it('if an error should return internal server error', async () => {
       mockRepository.find.mockRejectedValue(globalError);
       return expect(service.index()).rejects.toMatchObject({statusCode: globalError.statusCode});
@@ -90,7 +90,18 @@ describe('UserService', () => {
       return expect(service.updata('1',user)).rejects.toMatchObject({statusCode: globalError.statusCode});
     });
   });
+  describe('delete', () => {
+    it('if successful, it should return undefined', async () => {
+      const success = await service.destroy('1');
+      expect(mockRepository.delete).toHaveBeenCalledTimes(1)
+      expect(success).toBeUndefined();
+    });
+    it('if an error should return internal server error', async () => {
+      mockRepository.delete.mockRejectedValue(globalError);
+      return expect(service.destroy('1')).rejects.toMatchObject({statusCode: globalError.statusCode});
+    });
+  });
 
-  
+
 
 })
