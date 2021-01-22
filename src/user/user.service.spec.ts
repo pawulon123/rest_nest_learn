@@ -6,20 +6,15 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import  giveMocks  from '../../test/helpers/mocks';
 import  globalError  from '../../test/helpers/globalError';
 import { tsImportEqualsDeclaration } from '@babel/types';
+import createMockRepository from '../../test/helpers/mock.repository';
 
 
 describe('UserService', () => {
   let service: UserService;
   const mocks = giveMocks();
+  const methods = ['find', 'findOneOrFail', 'save', 'update',  'delete']
+  const mockRepository = createMockRepository(methods); 
 
-  let mockRepository= {
-    find:jest.fn(),
-    findOneOrFail:jest.fn(),
-    save:jest.fn(),
-    update:jest.fn(),
-    delete:jest.fn(),
-    destroy:jest.fn()
-  }
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
