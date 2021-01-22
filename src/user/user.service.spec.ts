@@ -77,4 +77,20 @@ describe('UserService', () => {
       return expect(service.create(user)).rejects.toMatchObject({statusCode: globalError.statusCode});
     });
   });
+  describe('update', () => {
+    it('if successful, it should return undefined', async () => {
+      const user = mocks.user();
+      const success = await service.updata('1', user);
+      expect(mockRepository.update).toHaveBeenCalledTimes(1)
+      expect(success).toBeUndefined();
+    });
+    it('if an error should return internal server error', async () => {
+      const user = mocks.user();
+      mockRepository.update.mockRejectedValue(globalError);
+      return expect(service.updata('1',user)).rejects.toMatchObject({statusCode: globalError.statusCode});
+    });
+  });
+
+  
+
 })
