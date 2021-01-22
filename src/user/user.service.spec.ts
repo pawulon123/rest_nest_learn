@@ -19,7 +19,6 @@ describe('UserService', () => {
     update:jest.fn(),
     delete:jest.fn(),
     destroy:jest.fn()
-   
   }
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -31,7 +30,6 @@ describe('UserService', () => {
         },
       ],
     }).compile();
-
     service = module.get<UserService>(UserService);
   });
 
@@ -51,13 +49,14 @@ describe('UserService', () => {
       return expect(service.index()).rejects.toMatchObject({statusCode: globalError.statusCode});
     });
   });
-  describe('findOneOrFail', ()=>{
+  describe('findOne', ()=>{
     it('should find a existing  user', async () => {
       const user = mocks.user();
       mockRepository.findOneOrFail.mockReturnValue(user);
       const User = await service.findOne('1');
       expect(User).toMatchObject({ name : user.name });
       expect(mockRepository.findOneOrFail).toHaveBeenCalledTimes(1);
+      expect(mockRepository.findOneOrFail).toHaveBeenCalledWith('1');
     });
     it('if an error should return internal server error', async () => {
       mockRepository.findOneOrFail.mockRejectedValue(globalError);
@@ -70,6 +69,7 @@ describe('UserService', () => {
       const success = await service.create(user);
       expect(mockRepository.save).toHaveBeenCalledTimes(1)
       expect(success).toBeUndefined();
+      expect(mockRepository.save).toHaveBeenCalledWith(user);
     });
     it('if an error should return internal server error', async () => {
       const user = mocks.user();
@@ -83,6 +83,7 @@ describe('UserService', () => {
       const success = await service.updata('1', user);
       expect(mockRepository.update).toHaveBeenCalledTimes(1)
       expect(success).toBeUndefined();
+      expect(mockRepository.update).toHaveBeenCalledWith('1', user);
     });
     it('if an error should return internal server error', async () => {
       const user = mocks.user();
@@ -93,8 +94,9 @@ describe('UserService', () => {
   describe('delete', () => {
     it('if successful, it should return undefined', async () => {
       const success = await service.destroy('1');
-      expect(mockRepository.delete).toHaveBeenCalledTimes(1)
       expect(success).toBeUndefined();
+      expect(mockRepository.delete).toHaveBeenCalledTimes(1)
+      expect(mockRepository.delete).toHaveBeenCalledWith('1');
     });
     it('if an error should return internal server error', async () => {
       mockRepository.delete.mockRejectedValue(globalError);
