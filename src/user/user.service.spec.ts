@@ -67,12 +67,12 @@ describe('UserService', () => {
   describe('create', () => {
     it('if successful, it should return undefined', async () => {
       const user = mocks.user();
-      mockRepository.save.mockReturnValue({});
       const success = await service.create(user);
-      expect(success).toEqual(undefined);
+      expect(mockRepository.save).toHaveBeenCalledTimes(1)
+      expect(success).toBeUndefined();
     });
     it('if an error should return internal server error', async () => {
-      const user = mocks.user(  );
+      const user = mocks.user();
       mockRepository.save.mockRejectedValue(globalError);
       return expect(service.create(user)).rejects.toMatchObject({statusCode: globalError.statusCode});
     });
