@@ -4,7 +4,7 @@ import { UserService } from './user.service';
 import { users } from './user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import  giveMocks  from '../../test/helpers/mocks';
-import  globalError  from '../../test/helpers/globalError';
+import  rejectGlobalError  from '../../test/helpers/globalError';
 import { tsImportEqualsDeclaration } from '@babel/types';
 import createMockRepository from '../../test/helpers/mock.repository';
 
@@ -12,9 +12,10 @@ import createMockRepository from '../../test/helpers/mock.repository';
 describe('UserService', () => {
   let service: UserService;
   const mocks = giveMocks();
-  const methods = ['find', 'findOneOrFail', 'save', 'update',  'delete']
+  const methods = ['find', 'findOneOrFail', 'save', 'update',  'delete'];
   const mockRepository = createMockRepository(methods); 
-
+  const catchGlobalError = rejectGlobalError(mockRepository)
+  
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -39,10 +40,7 @@ describe('UserService', () => {
       expect(Users).toHaveLength(2);
       expect(mockRepository.find).toHaveBeenCalledTimes(1);
       });
-    it('if an error should return internal server error', async () => {
-      mockRepository.find.mockRejectedValue(globalError);
-      return expect(service.index()).rejects.toMatchObject({statusCode: globalError.statusCode});
-    });
+    it('if an error should return internal server error', async () => catchGlobalError('find', service.index.bind(service)));
   });
   describe('findOne', ()=>{
     it('should find a existing  user', async () => {
@@ -53,10 +51,7 @@ describe('UserService', () => {
       expect(mockRepository.findOneOrFail).toHaveBeenCalledTimes(1);
       expect(mockRepository.findOneOrFail).toHaveBeenCalledWith('1');
     });
-    it('if an error should return internal server error', async () => {
-      mockRepository.findOneOrFail.mockRejectedValue(globalError);
-      return expect(service.findOne(null)).rejects.toMatchObject({statusCode: globalError.statusCode});
-    });
+    it('if an error should return internal server error', async () => catchGlobalError('findOneOrFail', service.findOne.bind(service)));
   });
   describe('create', () => {
     it('if successful, it should return undefined', async () => {
@@ -66,11 +61,7 @@ describe('UserService', () => {
       expect(success).toBeUndefined();
       expect(mockRepository.save).toHaveBeenCalledWith(user);
     });
-    it('if an error should return internal server error', async () => {
-      const user = mocks.user();
-      mockRepository.save.mockRejectedValue(globalError);
-      return expect(service.create(user)).rejects.toMatchObject({statusCode: globalError.statusCode});
-    });
+    it('if an error should return internal server error', async () => catchGlobalError('save', service.create.bind(service)));
   });
   describe('update', () => {
     it('if successful, it should return undefined', async () => {
@@ -80,11 +71,7 @@ describe('UserService', () => {
       expect(success).toBeUndefined();
       expect(mockRepository.update).toHaveBeenCalledWith('1', user);
     });
-    it('if an error should return internal server error', async () => {
-      const user = mocks.user();
-      mockRepository.update.mockRejectedValue(globalError);
-      return expect(service.updata('1',user)).rejects.toMatchObject({statusCode: globalError.statusCode});
-    });
+    it('if an error should return internal server error', async () => catchGlobalError('update', service.updata.bind(service)));
   });
   describe('delete', () => {
     it('if successful, it should return undefined', async () => {
@@ -93,10 +80,7 @@ describe('UserService', () => {
       expect(mockRepository.delete).toHaveBeenCalledTimes(1)
       expect(mockRepository.delete).toHaveBeenCalledWith('1');
     });
-    it('if an error should return internal server error', async () => {
-      mockRepository.delete.mockRejectedValue(globalError);
-      return expect(service.destroy('1')).rejects.toMatchObject({statusCode: globalError.statusCode});
-    });
+    it('if an error should return internal server error', async () => catchGlobalError('delete', service.destroy.bind(service)));
   });
 
 
