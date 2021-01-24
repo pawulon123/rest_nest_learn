@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
-import { UserService } from './user.service';
-import { User } from '../interfaces/user'
+import {UserService } from './user.service';
+import  Person  from '../interfaces/user'
 
 @Controller('user')
 export class UserController {
@@ -8,23 +8,23 @@ export class UserController {
         private readonly userService: UserService
     ) {}
     @Get()
-    async all(): Promise<User[]> { 
-        return await this.userService.index()           
+    async all(): Promise<Person[]> { 
+        return await this.userService.index();           
     }
     @Get(':id')
-    async one(@Param() params): Promise<User> { 
+    async one(@Param() params): Promise<Person> { 
         return await this.userService.findOne(params.id);          
     }
     @Post()
-    async create(@Body() user: User): Promise<any> {
+    async create(@Body() user: Person): Promise<any> {
         await this.userService.create(user);
     }
     @Put(':id')
-    async updata(@Param() params, @Body() user: User): Promise<any> {
-        await this.userService.updata(params.id, user)
+    async updata(@Param() params, @Body() user: Person): Promise<any> {
+        await this.userService.updata(params.id, user);
     }
     @Delete(':id')
     async destroy(@Param() params): Promise<any> {
-        await this.userService.destroy(params.id)
+        await this.userService.destroy(params.id);
     }
 }

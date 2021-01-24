@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
 import { NoteService } from './note.service';
-import { Note } from '../interfaces/note'
+import  Message from '../interfaces/note'
 
 @Controller('note')
 export class NoteController {
@@ -8,19 +8,19 @@ export class NoteController {
         private readonly noteService: NoteService
     ) {}
     @Get()
-    async all(): Promise<Note[]> {
+    async all(): Promise<Message[]> {
         return await this.noteService.index();
     }
     @Get(':id')
-    async one(@Param() params): Promise<Note> {
+    async one(@Param() params): Promise<Message> {
         return await this.noteService.findOne(params.id);
     }
     @Post()
-    async create(@Body() note: Note): Promise<any> {
+    async create(@Body() note: Message): Promise<any> {
         await this.noteService.create(note);
     }
     @Put(':id')
-    async updata(@Param() params, @Body() note: Note): Promise<any> {
+    async updata(@Param() params, @Body() note: Message): Promise<any> {
         await this.noteService.updata(params.id, note);
     }
     @Delete(':id')

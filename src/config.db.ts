@@ -1,5 +1,5 @@
-import { users } from './user/user.entity';
-import { notes } from './note/note.entity';
+import User  from './user/user.entity';
+import Note  from './note/note.entity';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
   
 export default (): TypeOrmModuleOptions => {
@@ -12,7 +12,7 @@ export default (): TypeOrmModuleOptions => {
     username: DB_USER,
     password: DB_PASSWORD,
     database: DB_NAME,
-    entities: [users, notes],
+    entities: [User, Note],
     synchronize: false,
   }
 } 

@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
-import { users } from './user.entity';
+import  User  from './user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import  giveMocks  from '../../test/helpers/mocks';
 import  rejectGlobalError  from '../../test/helpers/globalError';
@@ -21,7 +21,7 @@ describe('UserService', () => {
       providers: [
         UserService,
         {
-          provide:getRepositoryToken(users),
+          provide:getRepositoryToken(User),
           useValue: mockRepository
         },
       ],
@@ -33,7 +33,7 @@ describe('UserService', () => {
     expect(service).toBeDefined();
   });
   describe('index', ()=>{
-    it('should be return list all users', async () => {
+    it('should be return list all User', async () => {
       const user = mocks.user();
       mockRepository.find.mockReturnValue([user, user])
       const Users = await service.index();

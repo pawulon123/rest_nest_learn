@@ -10,12 +10,10 @@ describe('UserController', () => {
   const mocks = giveMocks();
   const methods = ['findOne', 'create', 'updata','destroy'];
 
-  // const mockRepository = createMockRepository(methods); 
+  
   const uuserService =  mocks.userService();
  
-  // const u = new uuserService()
-  // methods.forEach(method => u.prototype[method] = jest.fn())
-  // Logger.log(Object.keys(u))
+ 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UserController],
@@ -29,7 +27,7 @@ describe('UserController', () => {
     }).compile();
     
     controller = module.get<UserController>(UserController);
-    // userService = module.get<UserService>(UserService);
+  
     
   });
 
@@ -43,12 +41,7 @@ describe('UserController', () => {
       const user = mocks.user();
      
       
-      // mockRepository.find.mockReturnValue([user, user])
-      // const Users = await service.index();
-      // expect(Users).toHaveLength(2);
-      // expect(mockRepository.find).toHaveBeenCalledTimes(1);
-      // });
-
+  
   });
 })
 
