@@ -1,8 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm'
-import { users } from '../user/user.entity';
+import  User  from '../user/user.entity';
 @Entity()
 
-export class notes {
+export default class notes {
     @PrimaryGeneratedColumn()
     id: number;
     @Column()
@@ -16,8 +16,8 @@ export class notes {
     @Column()
     updated_at: string;
 
-    @ManyToOne(() => users, user => user.note)
-    user: users;
+    @ManyToOne(() => User, user => user.note)
+    user: User;
 
     
 }

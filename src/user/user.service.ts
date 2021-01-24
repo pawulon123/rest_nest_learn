@@ -1,32 +1,30 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { users } from './user.entity';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../interfaces/user'
+
+import User from './user.entity';
+import Person from '../interfaces/user'
+
 @Injectable()
 export class UserService {
     constructor(
-        @InjectRepository(users)
-        private userRepository: Repository<users>,
+        @InjectRepository(User)
+        private userRepository: Repository<Person>,
     ) {}
-
-    async index(): Promise<User[]> {
+    async index(): Promise<Person[]> {
         return await this.userRepository.find();
     }
-    async findOne(id): Promise<User[]>{ 
-        return await this.userRepository.find({where: [{ "id": id }]});
+    async findOne(id): Promise<Person> { 
+        return await this.userRepository.findOneOrFail(id);
     }  
-    async create(user: User): Promise<any> {
-        const userReady = await this.userRepository.save(user);
-        // Logger.log(userReady);    
+    async create(user: Person): Promise<any> {
+        await this.userRepository.save(user);
     }
-    async updata(id: string, body: User): Promise<any>{
-        const objAnswer =  await this.userRepository.update(id,body);
-        Logger.log(objAnswer);
-    }
+    async updata(id: string, body: Person): Promise<any> {
+        await this.userRepository.update(id,body);
+    }   
     async destroy(id: string): Promise<any> {
-        const objAnswer = await this.userRepository.delete(id);
-        Logger.log(objAnswer);
+        await this.userRepository.delete(id);
     }
 
 }

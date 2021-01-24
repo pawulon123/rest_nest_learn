@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
-import { notes } from '../note/note.entity'
+import Note  from '../note/note.entity'
 @Entity()
-export class users {
+export default class users {
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -19,8 +19,8 @@ export class users {
   password: string;
 
 
-    @OneToMany(() => notes, notes => notes.user)
-    note: notes[];users
+    @OneToMany(() => Note, note => note.user)
+    note: Note[];users
   
 
 

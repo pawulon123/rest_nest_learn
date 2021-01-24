@@ -1,4 +1,4 @@
-export class Note{
+export default class Note{
     userId: number
     title: string;
     value: string;
