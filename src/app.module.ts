@@ -15,7 +15,7 @@ import { notes } from './note/note.entity';
       username: 'root',
       password: 'root',
       database: 'learnig_schema',
-      entities: [users, notes],
+      entities: ["dist/**/*.entity{.ts,.js}"],
       synchronize: false,
     }),
     UserModule,
