@@ -7,13 +7,10 @@ export class users {
   @Column()
   name: string;
   @Column()
-  surename: string;
+  surname: string;
   @Column()
   birthday: string;
   @Column()
-  created_at: string;
-  @Column()
-  updated_at: string;
-  @Column()
   password: string;
+ 
 }
