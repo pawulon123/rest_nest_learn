@@ -7,12 +7,8 @@ export class notes {
     @Column()
     title: string;
     @Column()
-    value: string;
+    value: string;  
     @Column()
-    user_id: number;
-    @Column()
-    created_at: string;
-    @Column()
-    updated_at: string;
-    
+    userId: number;
+   
 }

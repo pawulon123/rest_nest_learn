@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, Logger } from '@nestjs/common';
 import { NoteService } from './note.service';
-import { Note } from '../interfaces/note'
+import { NoteDTO } from './note'
 
 @Controller('note')
 export class NoteController {
@@ -8,21 +8,21 @@ export class NoteController {
         private readonly noteService: NoteService
     ) { }
     @Get()
-    all(): Promise<Note[]> {
+    getAll(): Promise<NoteDTO[]> {
         return this.noteService.index()
     }
     @Get(':id')
-    one( @Param() params): Promise<Note[]> {
+    getOne( @Param() params): Promise<NoteDTO[]> {
         return this.noteService.findOne(params.id);
     }
     @Post()
-    create( @Body() note: Note): void {
+    create( @Body() note: NoteDTO): void {
         this.noteService.create(note);
     }
 
     @Put(':id')
-    updata( @Param() params, @Body() note: Note): void {
-        this.noteService.updata(params.id, note)
+    updata( @Param() params, @Body() note: NoteDTO): Promise<NoteDTO> {
+        return this.noteService.update(params.id, note)
     }
     @Delete(':id')
     destroy( @Param() params): void {
