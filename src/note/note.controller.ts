@@ -13,19 +13,19 @@ export class NoteController {
         return this.noteService.getAll();
     }
     @Get(':id')
-    getOne(@Param() params: {id: number}): Promise<NoteDTO> {
-        return this.noteService.findOne(params.id);
+    getOne(@Param() params: {id: string}): Promise<NoteDTO> {
+        return this.noteService.findOne(+params.id);
     }
     @Post()
     create(@Body() note: NoteDTO):Promise<any> {
         return this.noteService.create(note);
     }
     @Put(':id')
-    updata(@Param()params: {id: number}, @Body() note: NoteDTO): Promise<UpdateResult> {  
-        return this.noteService.update(params.id, note);
+    updata(@Param()params: {id: string}, @Body() note: NoteDTO): Promise<UpdateResult> {  
+        return this.noteService.update(+params.id, note);
     }
     @Delete(':id')
-    destroy(@Param() params : {id: number}):Promise<any> {
-        return this.noteService.destroy(params.id);
+    destroy(@Param() params : {id: string}):Promise<any> {
+        return this.noteService.destroy(+params.id);
     }
 }
