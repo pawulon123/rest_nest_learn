@@ -1,14 +1,13 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-@Entity()
+@Entity('notes')
 
-export class notes {
+export class Note {
     @PrimaryGeneratedColumn()
     id: number;
-    @Column()
+    @Column({ type: 'varchar', length: 14, nullable: true })
     title: string;
-    @Column()
+    @Column({ type: 'varchar', length: 14 })
     value: string;  
-    @Column()
+    @Column({ type: 'integer', unsigned: true, nullable: true  })
     userId: number;
-   
 }

@@ -1,30 +1,28 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-
-import { notes } from './note.entity';
+import { Note } from './note.entity';
 import { NoteDTO } from './note'
 @Injectable()
 export class NoteService {
     constructor(
-        @InjectRepository(notes)
-        private noteRepository: Repository<notes>,
+        @InjectRepository(Note)
+        private noteRepository: Repository<Note>,
     ) { }
-    async index(): Promise<NoteDTO[]> {
-        return await this.noteRepository.find();
+    getAll(): Promise<NoteDTO[]> {
+        return  this.noteRepository.find();
     }
-    async findOne(id): Promise<NoteDTO[]> {
-        return await this.noteRepository.find({ where: [{ 'id': id }] });
+    findOne(id: number): Promise<NoteDTO> {
+        return  this.noteRepository.findOneOrFail(id);
     }
-    async create(note: NoteDTO): Promise<any> {
-        const noteReady = await this.noteRepository.save(note);
-
+     create(note: NoteDTO): Promise<Note> {
+        return  this.noteRepository.save(note);
     }
-    async update(id: number, body: NoteDTO): Promise<NoteDTO> {
-        const objAnswer = await this.noteRepository.update(id, body)
-        return body;
+    update(id: number, body: NoteDTO): Promise<any> {
+        return  this.noteRepository.update(id, body);
+        
     }
-    async destroy(id: number): Promise<any> {
+     destroy(id: number): Promise<any> {
         return this.noteRepository.delete(id);
         
     }

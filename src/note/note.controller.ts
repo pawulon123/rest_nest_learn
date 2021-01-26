@@ -9,23 +9,22 @@ export class NoteController {
     ) { }
     @Get()
     getAll(): Promise<NoteDTO[]> {
-        return this.noteService.index()
+        return this.noteService.getAll();
     }
     @Get(':id')
-    getOne( @Param() params): Promise<NoteDTO[]> {
+    getOne(@Param() params: {id: number}): Promise<NoteDTO> {
         return this.noteService.findOne(params.id);
     }
     @Post()
-    create( @Body() note: NoteDTO): void {
-        this.noteService.create(note);
+    create(@Body() note: NoteDTO):Promise<any> {
+        return this.noteService.create(note);
     }
-
     @Put(':id')
-    updata( @Param() params, @Body() note: NoteDTO): Promise<NoteDTO> {
-        return this.noteService.update(params.id, note)
+    updata(@Param()params: {id: number}, @Body() note: NoteDTO): Promise<NoteDTO> {  
+        return this.noteService.update(params.id, note);
     }
     @Delete(':id')
-    destroy( @Param() params): void {
-        this.noteService.destroy(params.id)
+    destroy(@Param() params : {id: number}):Promise<any> {
+        return this.noteService.destroy(params.id);
     }
 }

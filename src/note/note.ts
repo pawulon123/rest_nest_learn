@@ -11,7 +11,7 @@ export class NoteDTO {
         @MinLength(2)
     title: string;
 
-        @MaxLength(222)
+        @MaxLength(14)
         @MinLength(2)
     value: string;
     
