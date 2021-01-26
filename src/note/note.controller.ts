@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, Logger } from '@nestjs/common';
 import { NoteService } from './note.service';
 import { NoteDTO } from './note'
+import { UpdateResult } from 'typeorm';
 
 @Controller('note')
 export class NoteController {
@@ -20,7 +21,7 @@ export class NoteController {
         return this.noteService.create(note);
     }
     @Put(':id')
-    updata(@Param()params: {id: number}, @Body() note: NoteDTO): Promise<NoteDTO> {  
+    updata(@Param()params: {id: number}, @Body() note: NoteDTO): Promise<UpdateResult> {  
         return this.noteService.update(params.id, note);
     }
     @Delete(':id')

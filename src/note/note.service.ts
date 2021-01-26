@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { Note } from './note.entity';
 import { NoteDTO } from './note'
 @Injectable()
@@ -18,13 +18,11 @@ export class NoteService {
      create(note: NoteDTO): Promise<Note> {
         return  this.noteRepository.save(note);
     }
-    update(id: number, body: NoteDTO): Promise<any> {
+    update(id: number, body: NoteDTO): Promise<UpdateResult> {
         return  this.noteRepository.update(id, body);
-        
     }
      destroy(id: number): Promise<any> {
         return this.noteRepository.delete(id);
-        
     }
 }
 
